@@ -4,6 +4,37 @@ UrbanEats is a modern, full-stack food delivery platform with two connected appl
 
 Both applications are built with React (Vite) and use Supabase for Authentication, Database, and Storage.
 
+## 🏗️ System Architecture
+
+```mermaid
+flowchart LR
+    subgraph Frontend [Frontend Applications]
+        direction TB
+        Customer[Customer App<br>React/Vite]
+        Admin[Admin Dashboard<br>React/Vite]
+    end
+
+    subgraph Backend [Supabase Backend]
+        direction TB
+        Auth[Authentication]
+        DB[(PostgreSQL DB)]
+        Storage[Storage Bucket]
+        Realtime[Realtime Subscriptions]
+    end
+
+    %% Customer Interactions
+    Customer -- "Sign In/Up" --> Auth
+    Customer -- "Fetch Menu & Place Orders" --> DB
+    
+    %% Admin Interactions
+    Admin -- "Add/Edit Menu" --> DB
+    Admin -- "Upload Food Images" --> Storage
+    Admin -- "Receive Live Orders" --> Realtime
+    
+    %% Internal
+    Realtime -. "Listens to" .-> DB
+```
+
 ## 🚀 Features
 
 ### Customer App (`UrbanEats/`)
