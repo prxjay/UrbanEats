@@ -1,5 +1,7 @@
 # UrbanEats
 
+🌍 **Live Demo:** [https://urbaneats-web.vercel.app/](https://urbaneats-web.vercel.app/)
+
 UrbanEats is a modern, full-stack food delivery platform with two connected applications: a Customer-facing App for browsing and ordering food, and an Admin Dashboard for managing orders and the restaurant menu in real-time.
 
 Both applications are built with React (Vite) and use Supabase for Authentication, Database, and Storage.
@@ -33,6 +35,26 @@ flowchart LR
     
     %% Internal
     Realtime -. "Listens to" .-> DB
+```
+
+## 🚶‍♂️ User Journey (Ordering Flow)
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant App as Customer App
+    participant DB as Supabase DB
+    participant Admin as Admin Panel
+    
+    User->>App: Browses Menu
+    App->>DB: Fetch Food Items
+    DB-->>App: Return Menu Data
+    User->>App: Adds Items to Cart & Checks Out
+    App->>DB: Insert Order (Status: Pending)
+    DB-->>Admin: Realtime Trigger: New Order Alert
+    Admin-->>DB: Accept Order & Update Status (Preparing)
+    DB-->>App: Realtime Trigger: Order Status Updated
+    App-->>User: "Your order is being prepared!"
 ```
 
 ## 🚀 Features
