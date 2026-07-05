@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Helper to handle and validate user sign in / registration
     const handleUserSession = async (user) => {
       if (user) {
         // A new user has created_at very close to last_sign_in_at
@@ -22,18 +21,28 @@ export function AuthProvider({ children }) {
         const isNewUser = Math.abs(lastSignInAt - createdAt) < 15000; // 15 seconds window
         const isRegistering = localStorage.getItem("isRegistering") === "true";
 
-        if (isNewUser && !isRegistering) {
-          // Block sign up if they didn't explicitly request to register
-          await supabase.auth.signOut();
-          localStorage.removeItem("token");
+        if (isNewUser) {
+          if (!isRegistering) {
+            // Block sign up if they didn't explicitly request to register
+            localStorage.removeItem("token");
+            localStorage.removeItem("isRegistering");
+            setCurrentUser(null);
+            toast.error("Account not registered. Please sign up first!", { toastId: "not-registered-error" });
+            await supabase.auth.signOut();
+            setLoading(false);
+            return;
+          }
+          // If they ARE registering, we purposefully leave "isRegistering" in localStorage 
+          // for the full 15 seconds. This prevents duplicate React StrictMode events 
+          // or Supabase auth events from accidentally blocking them milliseconds later!
+        } else {
+          // If they are not a new user (older than 15s), it's safe to clean up
           localStorage.removeItem("isRegistering");
-          setCurrentUser(null);
-          toast.error("Account not registered. Please sign up first!");
-          setLoading(false);
-          return;
         }
+      } else {
+        localStorage.removeItem("isRegistering");
       }
-      localStorage.removeItem("isRegistering");
+      
       setCurrentUser(user);
       setLoading(false);
     };

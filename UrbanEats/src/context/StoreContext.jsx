@@ -130,14 +130,22 @@ export const StoreContextProvider = (props) => {
           // If the user just signed in via Google (flag set before redirect)
           if (localStorage.getItem("oauthFlow") === "true") {
             const user = session.user;
-            const rawName = user?.user_metadata?.name || user?.user_metadata?.full_name || user?.user_metadata?.display_name || user?.email?.split("@")[0] || "there";
-            let firstName = rawName.split(" ")[0].split(".")[0].split("_")[0];
-            firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-            
-            // Delay toast slightly to ensure ToastContainer has mounted after page reload
-            setTimeout(() => {
-              toast.success(`Welcome back, ${firstName}!`);
-            }, 500);
+            const createdAt = new Date(user.created_at).getTime();
+            const lastSignInAt = new Date(user.last_sign_in_at || user.created_at).getTime();
+            const isNewUser = Math.abs(lastSignInAt - createdAt) < 15000;
+            const isRegistering = localStorage.getItem("isRegistering") === "true";
+
+            // If AuthContext is going to block them, don't show the success toast!
+            if (!(isNewUser && !isRegistering)) {
+              const rawName = user?.user_metadata?.name || user?.user_metadata?.full_name || user?.user_metadata?.display_name || user?.email?.split("@")[0] || "there";
+              let firstName = rawName.split(" ")[0].split(".")[0].split("_")[0];
+              firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+              
+              // Delay toast slightly to ensure ToastContainer has mounted after page reload
+              setTimeout(() => {
+                toast.success(`Welcome back, ${firstName}!`);
+              }, 500);
+            }
             
             // Clean hash to remove trailing # left by Supabase
             window.history.replaceState(null, "", window.location.pathname + window.location.search);
