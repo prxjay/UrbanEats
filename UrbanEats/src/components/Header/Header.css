@@ -1,0 +1,276 @@
+/* =========================================
+   HERO HEADER — SWIGGY STYLE (IMAGE BG)
+   ========================================= */
+.hero {
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  overflow: visible; /* Ensure dropdown is not clipped */
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../../assets/hero-bg.png');
+  background-size: cover;
+  background-position: center 40%;
+  z-index: 0;
+}
+
+/* Dark overlay so text is readable without blur */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(15,10,5,0.85) 0%,
+    rgba(15,10,5,0.72) 55%,
+    rgba(15,10,5,0.45) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 20;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 24px 56px;
+  width: 100%;
+  /* push content slightly right */
+  padding-left: 80px;
+}
+
+/* Title */
+.hero-title {
+  font-size: clamp(34px, 4.5vw, 58px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin-bottom: 14px;
+  max-width: 560px;
+}
+.hero-title span { color: var(--primary); }
+
+/* Subtitle */
+.hero-subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.65;
+  max-width: 460px;
+  margin-bottom: 28px;
+}
+
+/* Location + Search row container (to control overflow safely) */
+.hero-search-row-container {
+  max-width: 580px;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1000 !important;
+}
+
+.hero-search-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  position: relative;
+}
+
+.hero-location-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 20px;
+  background: white;
+  border: none;
+  border-right: 1.5px solid var(--gray-200);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: var(--transition);
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  height: 54px;
+}
+.hero-location-btn:hover { background: var(--primary-light); }
+.hero-location-btn svg { color: var(--primary); width: 16px; height: 16px; }
+.hero-location-arrow { color: var(--gray-400); font-size: 10px; margin-left: 2px; }
+
+/* Location dropdown overlay */
+.hero-location-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 200px;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  border: 1.5px solid #b8b8b8;
+  overflow: hidden;
+  z-index: 99999 !important;
+  animation: slideDown 0.18s ease;
+}
+.hero-location-option {
+  padding: 12px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+}
+.hero-location-option:hover { background: var(--primary-light); color: var(--primary); }
+.hero-location-option.selected { color: var(--primary); font-weight: 700; }
+
+.hero-search-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.hero-search-wrap input {
+  width: 100%;
+  padding: 16px 120px 16px 44px;
+  border: none;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  height: 54px;
+}
+.hero-search-wrap input::placeholder { color: var(--text-muted); }
+.hero-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+.hero-search-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  height: 42px;
+}
+.hero-search-btn:hover { background: var(--primary-dark); }
+
+/* Stats */
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.hero-stat { display: flex; flex-direction: column; gap: 2px; }
+.hero-stat-value {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--white);
+}
+.hero-stat-value span { color: var(--primary); }
+.hero-stat-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.52);
+  font-weight: 500;
+}
+
+/* =========================================
+   OFFER CARDS (below hero)
+   ========================================= */
+.hero-offers {
+  max-width: 1280px;
+  margin: -28px auto 0;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.offer-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid #e9ecef;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.offer-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.offer-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.offer-icon-orange { background: var(--primary-light); }
+.offer-icon-green  { background: #edf7ea; }
+.offer-icon-blue   { background: #e8f4fd; }
+.offer-text h4 {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.offer-text p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 1024px) {
+  .hero-content { padding-left: 40px; }
+}
+@media (max-width: 768px) {
+  .hero { min-height: 400px; }
+  .hero-content { padding: 48px 20px 52px; }
+  .hero-offers { grid-template-columns: 1fr; margin-top: -12px; padding: 0 16px; gap: 12px; }
+  .hero-stats { gap: 20px; }
+  .hero-stat-value { font-size: 20px; }
+  .hero-search-row-container { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  .hero { min-height: 360px; }
+  .hero-content { padding: 36px 16px 44px; }
+  .hero-title { font-size: 28px; }
+  .hero-subtitle { font-size: 14px; }
+  .hero-search-wrap input { padding: 15px 110px 15px 40px; font-size: 13px; }
+  .hero-location-btn { padding: 15px 10px; }
+  .hero-search-btn { padding: 8px 14px; font-size: 12px; }
+  .offer-card { padding: 14px 16px; }
+  .offer-icon { width: 42px; height: 42px; }
+}

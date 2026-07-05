@@ -1,0 +1,99 @@
+@import '../../components/Login/Login.css';
+
+/* Contact specific overrides */
+.contact-page {
+  background-image: url('../../assets/contact-bg.png');
+  background-size: cover;
+  background-position: center;
+}
+.contact-page .auth-page {
+  background: transparent;
+}
+.contact-card {
+  width: 100%;
+  max-width: 560px;
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  animation: fadeInUp 0.5s ease;
+  margin: 0 auto;
+}
+.contact-brand-strip {
+  background: linear-gradient(135deg, var(--secondary), #3d4152);
+  padding: 28px 32px;
+  text-align: center;
+}
+.contact-brand-strip h2 {
+  color: white;
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.contact-brand-strip p {
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+}
+.contact-body {
+  padding: 28px 32px 36px;
+}
+.contact-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.contact-phone-prefix {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.contact-phone-input {
+  padding-left: 46px !important;
+}
+.contact-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background: var(--gray-50);
+  outline: none;
+  resize: none;
+  transition: var(--transition);
+}
+.contact-textarea:focus {
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(252,128,25,0.12);
+}
+.contact-textarea::placeholder { color: var(--text-muted); }
+.contact-char-count {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* page layout */
+.contact-page.page-content {
+  min-height: calc(100vh - var(--nav-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+@media (max-width: 600px) {
+  .contact-row { flex-direction: column; }
+  .contact-card { max-width: 100%; }
+  .contact-body { padding: 24px 20px 28px; }
+}
